@@ -1,4 +1,4 @@
 ﻿  main.cpp
-c:\users\qishi\documents\project\algo_test\bubblesort\main.cpp(13): warning C4018: “<”: 有符号/无符号不匹配
-c:\users\qishi\documents\project\algo_test\bubblesort\main.cpp(30): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\qishi\documents\project\algo_test\bubblesort\main.cpp(16): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\qishi\documents\project\algo_test\bubblesort\main.cpp(33): warning C4018: “<”: 有符号/无符号不匹配
   bubblesort.vcxproj -> C:\Users\qishi\Documents\Project\algo_test\Debug\bubblesort.exe
