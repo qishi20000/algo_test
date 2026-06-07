@@ -1,0 +1,22 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        // 阿里云 Maven 仓库（AliVCSDK 发布于此）
+        maven { url "https://maven.aliyun.com/nexus/content/repositories/releases" }
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        google()
+        mavenCentral()
+        // 阿里云 Maven 仓库（AliVCSDK 发布于此）
+        maven { url "https://maven.aliyun.com/nexus/content/repositories/releases" }
+    }
+}
+
+rootProject.name = "AlivcCarPusher"
+include ':app'

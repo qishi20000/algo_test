@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">车机推流</string>
+
+    <string name="hint_push_url">推流地址 rtmp:// 或 artc://</string>
+    <string name="action_start">开始推流</string>
+    <string name="action_stop">停止</string>
+    <string name="action_switch_camera">切换摄像头</string>
+
+    <string name="notification_channel_name">车机推流服务</string>
+    <string name="notification_channel_desc">保持后台/锁屏持续推流</string>
+
+    <string name="state_idle">未推流</string>
+    <string name="state_previewing">预览中</string>
+    <string name="state_connecting">连接中…</string>
+    <string name="state_pushing">推流中</string>
+    <string name="state_paused">已暂停</string>
+    <string name="state_reconnecting">重连中…</string>
+    <string name="state_error">异常</string>
+</resources>
