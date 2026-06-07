@@ -1,0 +1,73 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+// AliVCSDK / 推流 SDK 版本。请到「阿里云控制台 > 视频直播 > SDK 下载」核对最新版本号。
+def alivcSdkVersion = "7.11.0"
+
+android {
+    namespace 'com.example.carpusher'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.example.carpusher"
+        // 推流 SDK 要求 Android 5.0 及以上
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0.0"
+
+        // 车机大多为 arm 架构，按需保留 ABI 以减小包体
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a"
+        }
+
+        // License 通过 Manifest 占位符注入，避免硬编码入库。
+        // 在 ~/.gradle/gradle.properties 或命令行 -PalivcLicenseKey=xxx 提供实际值。
+        def licenseKey = project.findProperty('alivcLicenseKey') ?: ''
+        def licenseFile = project.findProperty('alivcLicenseFile') ?: ''
+        manifestPlaceholders = [
+                ALIVC_LICENSE_KEY : licenseKey,
+                ALIVC_LICENSE_FILE: licenseFile
+        ]
+        buildConfigField "String", "ALIVC_LICENSE_KEY", "\"${licenseKey}\""
+    }
+
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.4'
+    implementation 'androidx.lifecycle:lifecycle-service:2.8.4'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1'
+
+    // ===== AliVCSDK（音视频终端一体化 SDK）=====
+    // 一体化 SDK（互动直播，含推流 AlivcLivePusher + 播放 + RTC）：
+    implementation "com.aliyun.sdk.android:AliVCSDK_InteractiveLive:${alivcSdkVersion}"
+    // 如只需 RTMP/RTS 单向推流、追求更小包体，可改用「推流 SDK 基础版」（API 完全一致）：
+    // implementation "com.alivc.pusher:AlivcLivePusher:${alivcSdkVersion}"
+}

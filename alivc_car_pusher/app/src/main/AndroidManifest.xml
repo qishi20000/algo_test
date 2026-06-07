@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 推流必需权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <!-- 来电时自动静音需要（见官方说明），可选 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- 后台/锁屏持续推流：前台服务相关权限 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <application
+        android:name=".CarPusherApp"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AlivcCarPusher"
+        tools:targetApi="34">
+
+        <!-- ============ AliVCSDK License 配置 ============ -->
+        <!-- 在「阿里云控制台 > 数智引擎 / 视频直播」申请 License，将 LicenseKey 填入下方 -->
+        <meta-data
+            android:name="com.aliyun.alivc_license.licensekey"
+            android:value="${ALIVC_LICENSE_KEY}" />
+        <!-- 若使用 License 证书文件方式，配置证书在 assets 中的相对路径；纯 LicenseKey 方式可留空 -->
+        <meta-data
+            android:name="com.aliyun.alivc_license.licensefile"
+            android:value="${ALIVC_LICENSE_FILE}" />
+
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 车机推流核心：前台服务，保证锁屏 / 后台时持续推流 -->
+        <service
+            android:name=".service.CarLivePushService"
+            android:exported="false"
+            android:foregroundServiceType="camera|microphone" />
+
+    </application>
+
+</manifest>
